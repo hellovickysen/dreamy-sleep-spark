@@ -6,10 +6,11 @@ import TimeInput from "@/components/TimeInput";
 import SleepCycles from "@/components/SleepCycles";
 import QuoteDisplay from "@/components/QuoteDisplay";
 import { calculateBedtimes, calculateWakeUpTimes, SleepCycle } from "@/utils/sleepCalculator";
-import { Moon, Clock, ArrowDown } from "lucide-react";
+import { Moon, Clock, ArrowDown, Sparkles } from "lucide-react";
+import AISleepCycleCalculator from "@/components/AISleepCycleCalculator";
 
 const Index = () => {
-  const [activeTab, setActiveTab] = useState<"bedtime" | "wakeup">("bedtime");
+  const [activeTab, setActiveTab] = useState<"bedtime" | "wakeup" | "ai">("bedtime");
   const [wakeupTime, setWakeupTime] = useState<Date>(() => {
     const now = new Date();
     now.setHours(7, 0, 0, 0);
@@ -30,7 +31,7 @@ const Index = () => {
   const calculateSleepCycles = () => {
     if (activeTab === "bedtime") {
       setSleepCycles(calculateBedtimes(wakeupTime));
-    } else {
+    } else if (activeTab === "wakeup") {
       setSleepCycles(calculateWakeUpTimes(bedtime));
     }
     
@@ -43,13 +44,16 @@ const Index = () => {
 
   // Initial calculation
   useEffect(() => {
-    calculateSleepCycles();
+    if (activeTab !== "ai") {
+      calculateSleepCycles();
+    }
   }, [activeTab]);
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/50 flex flex-col items-center px-4 py-10">
       <header className="text-center mb-8">
-        <h1 className="text-4xl font-bold mb-2 bg-gradient-sleep text-transparent bg-clip-text">
+        <h1 className="text-4xl font-bold mb-2 bg-gradient-sleep text-transparent bg-clip-text flex items-center justify-center gap-2">
+          <Moon className="h-8 w-8 text-primary animate-pulse-gentle" />
           Sleep Cycle Calculator
         </h1>
         <p className="text-muted-foreground max-w-md mx-auto">
@@ -61,10 +65,10 @@ const Index = () => {
         <Tabs
           defaultValue="bedtime"
           value={activeTab}
-          onValueChange={(value) => setActiveTab(value as "bedtime" | "wakeup")}
+          onValueChange={(value) => setActiveTab(value as "bedtime" | "wakeup" | "ai")}
           className="mb-6"
         >
-          <TabsList className="grid grid-cols-2">
+          <TabsList className="grid grid-cols-3">
             <TabsTrigger value="bedtime" className="flex items-center gap-2">
               <Moon className="h-4 w-4" />
               <span>Find Bedtime</span>
@@ -72,6 +76,10 @@ const Index = () => {
             <TabsTrigger value="wakeup" className="flex items-center gap-2">
               <Clock className="h-4 w-4" />
               <span>Find Wake Time</span>
+            </TabsTrigger>
+            <TabsTrigger value="ai" className="flex items-center gap-2">
+              <Sparkles className="h-4 w-4" />
+              <span>AI Advisor</span>
             </TabsTrigger>
           </TabsList>
           
@@ -90,16 +98,22 @@ const Index = () => {
               label="I want to go to sleep at"
             />
           </TabsContent>
+
+          <TabsContent value="ai" className="space-y-4 pt-4">
+            <AISleepCycleCalculator />
+          </TabsContent>
         </Tabs>
         
-        <Button 
-          onClick={calculateSleepCycles}
-          className="w-full bg-primary hover:bg-primary/90 text-white mt-2"
-        >
-          Calculate
-        </Button>
+        {activeTab !== "ai" && (
+          <Button 
+            onClick={calculateSleepCycles}
+            className="w-full bg-primary hover:bg-primary/90 text-white mt-2"
+          >
+            Calculate
+          </Button>
+        )}
         
-        {hasCalculated && (
+        {hasCalculated && activeTab !== "ai" && (
           <div className="mt-8 animate-fade-in">
             <div className="flex items-center justify-center mb-6">
               <ArrowDown className="animate-bounce text-primary" />
@@ -110,14 +124,14 @@ const Index = () => {
                 cycles={sleepCycles}
                 selectedIndex={selectedCycleIndex}
                 onSelect={setSelectedCycleIndex}
-                calculationType={activeTab}
+                calculationType={activeTab as "bedtime" | "wakeup"}
               />
             )}
           </div>
         )}
       </div>
       
-      {hasCalculated && <QuoteDisplay triggerNewQuote={quoteRefreshTrigger} />}
+      {(hasCalculated || activeTab === "ai") && <QuoteDisplay triggerNewQuote={quoteRefreshTrigger} />}
       
       <footer className="mt-auto pt-8 text-center text-muted-foreground text-sm">
         <p>Sleep better, live better. Each sleep cycle lasts about 90 minutes.</p>

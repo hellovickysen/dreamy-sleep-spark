@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -83,6 +82,10 @@
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  html {
+    @apply dark;
+  }
 }
 
 @layer base {
@@ -107,5 +110,17 @@
   
   .sleep-cycle-connection {
     @apply h-0.5 flex-grow transition-all;
+  }
+
+  .time-box {
+    @apply glass-panel p-4 font-bold text-xl text-center transition-all hover:scale-105;
+  }
+  
+  .suggested-time {
+    @apply relative;
+  }
+  
+  .suggested-badge {
+    @apply absolute -top-2 right-0 text-xs text-amber-400 uppercase tracking-wider font-semibold;
   }
 }

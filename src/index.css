@@ -102,10 +102,23 @@
   }
   
   .sleep-cycle-dot {
-    @apply w-4 h-4 rounded-full transition-all;
+    @apply w-6 h-6 rounded-full transition-all shadow-md shadow-black/10 dark:shadow-white/5;
+    background-image: linear-gradient(135deg, var(--dot-color-light), var(--dot-color));
+    transform-origin: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .sleep-cycle-dot:hover {
+    box-shadow: 0 0 12px var(--dot-glow-color);
+  }
+  
+  .sleep-cycle-dot.active {
+    transform: scale(1.5);
+    box-shadow: 0 0 16px var(--dot-glow-color);
   }
   
   .sleep-cycle-connection {
-    @apply h-0.5 flex-grow transition-all;
+    @apply h-1 flex-grow transition-all rounded-full;
   }
 }
+

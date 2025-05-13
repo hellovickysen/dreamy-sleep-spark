@@ -56,7 +56,7 @@ const Index = () => {
       <header className="text-center mb-8">
         <h1 className="text-4xl font-bold mb-2 bg-gradient-sleep text-transparent bg-clip-text flex items-center justify-center gap-2">
           <Moon className="h-8 w-8 text-primary animate-pulse-gentle" />
-          Sleep Cycle Calculator
+          AI-Sleep Cycle Calculator
         </h1>
         <p className="text-muted-foreground max-w-md mx-auto">
           Optimize your sleep by waking up between cycles instead of in the middle of one.

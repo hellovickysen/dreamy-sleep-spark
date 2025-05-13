@@ -8,6 +8,7 @@ import QuoteDisplay from "@/components/QuoteDisplay";
 import { calculateBedtimes, calculateWakeUpTimes, SleepCycle } from "@/utils/sleepCalculator";
 import { Moon, Clock, ArrowDown, Sparkles } from "lucide-react";
 import AISleepCycleCalculator from "@/components/AISleepCycleCalculator";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState<"bedtime" | "wakeup" | "ai">("bedtime");
@@ -26,6 +27,7 @@ const Index = () => {
   const [selectedCycleIndex, setSelectedCycleIndex] = useState(2); // Default to 5 cycles (3rd option)
   const [quoteRefreshTrigger, setQuoteRefreshTrigger] = useState(0);
   const [hasCalculated, setHasCalculated] = useState(false);
+  const isMobile = useIsMobile();
 
   // Calculate sleep cycles when tab, bedtime or wakeup time changes
   const calculateSleepCycles = () => {
@@ -68,7 +70,7 @@ const Index = () => {
           onValueChange={(value) => setActiveTab(value as "bedtime" | "wakeup" | "ai")}
           className="mb-6"
         >
-          <TabsList className="grid grid-cols-3">
+          <TabsList className={`${isMobile ? 'flex flex-col gap-2 w-full h-auto' : 'grid grid-cols-3'}`}>
             <TabsTrigger value="bedtime" className="flex items-center gap-2">
               <Moon className="h-4 w-4" />
               <span>Find Bedtime</span>

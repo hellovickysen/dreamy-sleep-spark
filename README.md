@@ -74,3 +74,4 @@ Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-trick
 
 ## this is my 1st project
 project done on dreamy-sleep-spark
+now i am going to pull it to windsurf

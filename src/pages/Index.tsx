@@ -9,6 +9,7 @@ import { calculateBedtimes, calculateWakeUpTimes, SleepCycle } from "@/utils/sle
 import { Moon, Clock, ArrowDown, Sparkles } from "lucide-react";
 import AISleepCycleCalculator from "@/components/AISleepCycleCalculator";
 import { useIsMobile } from "@/hooks/use-mobile";
+import SleepBlogSection from "@/components/SleepBlogSection";
 
 const Index = () => {
   const [activeTab, setActiveTab] = useState<"bedtime" | "wakeup" | "ai">("bedtime");
@@ -134,6 +135,9 @@ const Index = () => {
       </div>
       
       {(hasCalculated || activeTab === "ai") && <QuoteDisplay triggerNewQuote={quoteRefreshTrigger} />}
+      
+      {/* Add the blog section */}
+      <SleepBlogSection />
       
       <footer className="mt-auto pt-8 text-center text-muted-foreground text-sm">
         <p>Sleep better, live better. Each sleep cycle lasts about 90 minutes.</p>

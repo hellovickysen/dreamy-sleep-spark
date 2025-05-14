@@ -72,6 +72,3 @@ To connect a domain, navigate to Project > Settings > Domains and click Connect 
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
 
-## this is my 1st project
-project done on dreamy-sleep-spark
-now i am going to pull it to windsurf
